@@ -11,6 +11,8 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
+const name = "sed"
+
 // usageText is the command's multi-line usage synopsis, shown in --help.
 // cli/v3 indents the whole block by 3 spaces, so these lines are flush-left to
 // stay aligned in the rendered output.
@@ -42,7 +44,7 @@ func run(version string, args []string, stdin io.Reader, stdout, stderr io.Write
 	cmd.Writer = stdout
 	cmd.ErrWriter = stderr
 	if err := cmd.Run(context.Background(), args); err != nil {
-		_, _ = fmt.Fprintf(stderr, "sed: %v\n", err)
+		_, _ = fmt.Fprintf(stderr, name+": %v\n", err)
 		return 1
 	}
 	return 0
@@ -50,7 +52,7 @@ func run(version string, args []string, stdin io.Reader, stdout, stderr io.Write
 
 func newCommand(version string, stdin io.Reader, stdout io.Writer, fs afero.Fs) *cli.Command {
 	return &cli.Command{
-		Name:            "sed",
+		Name:            name,
 		Version:         version,
 		Usage:           "stream editor for filtering and transforming text",
 		UsageText:       usageText,
